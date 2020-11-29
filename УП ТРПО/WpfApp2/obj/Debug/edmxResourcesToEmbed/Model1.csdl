@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="anglebovModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="MatrixInBd">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Matrix" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="OperationOnMatrix" Relationship="Self.FK_OperationOnMatrix_MatrixInBd" FromRole="MatrixInBd" ToRole="OperationOnMatrix" />
+    <NavigationProperty Name="OperationOnMatrix1" Relationship="Self.FK_OperationOnMatrix_MatrixInBd1" FromRole="MatrixInBd" ToRole="OperationOnMatrix" />
+    <NavigationProperty Name="OperationOnMatrix2" Relationship="Self.FK_OperationOnMatrix_MatrixInBd2" FromRole="MatrixInBd" ToRole="OperationOnMatrix" />
+  </EntityType>
+  <EntityType Name="OperationInBd">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="OperationOnMatrix" Relationship="Self.FK_OperationOnMatrix_OperationInBd" FromRole="OperationInBd" ToRole="OperationOnMatrix" />
+  </EntityType>
+  <EntityType Name="OperationOnMatrix">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_mat1" Type="Int32" Nullable="false" />
+    <Property Name="id_mat2" Type="Int32" Nullable="false" />
+    <Property Name="id_result" Type="Int32" Nullable="false" />
+    <Property Name="id_operation" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="MatrixInBd" Relationship="Self.FK_OperationOnMatrix_MatrixInBd" FromRole="OperationOnMatrix" ToRole="MatrixInBd" />
+    <NavigationProperty Name="MatrixInBd1" Relationship="Self.FK_OperationOnMatrix_MatrixInBd1" FromRole="OperationOnMatrix" ToRole="MatrixInBd" />
+    <NavigationProperty Name="MatrixInBd2" Relationship="Self.FK_OperationOnMatrix_MatrixInBd2" FromRole="OperationOnMatrix" ToRole="MatrixInBd" />
+    <NavigationProperty Name="OperationInBd" Relationship="Self.FK_OperationOnMatrix_OperationInBd" FromRole="OperationOnMatrix" ToRole="OperationInBd" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_OperationOnMatrix_MatrixInBd">
+    <End Role="MatrixInBd" Type="Self.MatrixInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrixInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_mat1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OperationOnMatrix_MatrixInBd1">
+    <End Role="MatrixInBd" Type="Self.MatrixInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrixInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_mat2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OperationOnMatrix_MatrixInBd2">
+    <End Role="MatrixInBd" Type="Self.MatrixInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrixInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_result" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OperationOnMatrix_OperationInBd">
+    <End Role="OperationInBd" Type="Self.OperationInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OperationInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_operation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GanEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MatrixInBd" EntityType="Self.MatrixInBd" />
+    <EntitySet Name="OperationInBd" EntityType="Self.OperationInBd" />
+    <EntitySet Name="OperationOnMatrix" EntityType="Self.OperationOnMatrix" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_OperationOnMatrix_MatrixInBd" Association="Self.FK_OperationOnMatrix_MatrixInBd">
+      <End Role="MatrixInBd" EntitySet="MatrixInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OperationOnMatrix_MatrixInBd1" Association="Self.FK_OperationOnMatrix_MatrixInBd1">
+      <End Role="MatrixInBd" EntitySet="MatrixInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OperationOnMatrix_MatrixInBd2" Association="Self.FK_OperationOnMatrix_MatrixInBd2">
+      <End Role="MatrixInBd" EntitySet="MatrixInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OperationOnMatrix_OperationInBd" Association="Self.FK_OperationOnMatrix_OperationInBd">
+      <End Role="OperationInBd" EntitySet="OperationInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

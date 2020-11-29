@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище anglebovModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="MatrixInBd">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Matrix" Type="nvarchar" MaxLength="120" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OperationInBd">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="OperationOnMatrix">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_mat1" Type="int" Nullable="false" />
+    <Property Name="id_mat2" Type="int" Nullable="false" />
+    <Property Name="id_result" Type="int" Nullable="false" />
+    <Property Name="id_operation" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_OperationOnMatrix_MatrixInBd">
+    <End Role="MatrixInBd" Type="Self.MatrixInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrixInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_mat1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OperationOnMatrix_MatrixInBd1">
+    <End Role="MatrixInBd" Type="Self.MatrixInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrixInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_mat2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OperationOnMatrix_MatrixInBd2">
+    <End Role="MatrixInBd" Type="Self.MatrixInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MatrixInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_result" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OperationOnMatrix_OperationInBd">
+    <End Role="OperationInBd" Type="Self.OperationInBd" Multiplicity="1" />
+    <End Role="OperationOnMatrix" Type="Self.OperationOnMatrix" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OperationInBd">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="OperationOnMatrix">
+        <PropertyRef Name="id_operation" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище anglebovModelContainer">
+    <EntitySet Name="MatrixInBd" EntityType="Self.MatrixInBd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OperationInBd" EntityType="Self.OperationInBd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OperationOnMatrix" EntityType="Self.OperationOnMatrix" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_OperationOnMatrix_MatrixInBd" Association="Self.FK_OperationOnMatrix_MatrixInBd">
+      <End Role="MatrixInBd" EntitySet="MatrixInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OperationOnMatrix_MatrixInBd1" Association="Self.FK_OperationOnMatrix_MatrixInBd1">
+      <End Role="MatrixInBd" EntitySet="MatrixInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OperationOnMatrix_MatrixInBd2" Association="Self.FK_OperationOnMatrix_MatrixInBd2">
+      <End Role="MatrixInBd" EntitySet="MatrixInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OperationOnMatrix_OperationInBd" Association="Self.FK_OperationOnMatrix_OperationInBd">
+      <End Role="OperationInBd" EntitySet="OperationInBd" />
+      <End Role="OperationOnMatrix" EntitySet="OperationOnMatrix" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
